@@ -6,7 +6,14 @@
     "dev": "ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "jest"
+    "start:prod": "npm run prisma:migrate && npm start",
+    "test": "jest",
+    "prisma:migrate": "npx prisma migrate dev --name init",
+    "prisma:generate": "npx prisma generate",
+    "prisma:reset": "npx prisma migrate reset --force",
+    "prisma:status": "npx prisma migrate status",
+    "prisma:seed": "npx prisma db seed",
+    "prisma:studio": "npx prisma studio"
   },
   "keywords": [],
   "author": "",
