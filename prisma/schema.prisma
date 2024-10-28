@@ -18,6 +18,8 @@ model User {
   updatedAt DateTime @updatedAt
   profileId Int      @unique
   profile   Profile?
+
+  @@map("user")
 }
 
 model Profile {
@@ -28,6 +30,8 @@ model Profile {
   dateOfBirth    DateTime?
   medicalHistory String?
   user           User      @relation(fields: [userId], references: [id])
+
+  @@map("profile")
 }
 
 enum UserRole {
