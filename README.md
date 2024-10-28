@@ -2,7 +2,13 @@
 
 Este é um aplicativo de agendamento de consultas online, desenvolvido para conectar profissionais de saúde com pacientes de forma prática e intuitiva. O sistema permite a criação de perfis para profissionais e pacientes, agendamentos personalizados, sincronização de horários, preferências de consulta e avaliações pós-consulta, além de envio de confirmações por e-mail.
 
-> **Nota**: Este repositório contém apenas o código do backend. Para o código do front, acesse o repositório [Consult App](https://github.com/jefflsilva/consult_app).
+ **Nota**: Este repositório contém apenas o código do backend. Para o código do front, acesse o repositório [Consult App](https://github.com/jefflsilva/consult_app).
+ 
+ ## Deploy
+
+O projeto está hospedado e pode ser acessado através do seguinte link:
+
+[Consult App DEMO](https://consultappserver-production.up.railway.app/)
 
 ## 📋 Funcionalidades
 
