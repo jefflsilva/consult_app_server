@@ -1,7 +1,7 @@
-import { CreateUser } from "../../application/use-cases/createUser";
-import { UserRepository } from "../../domain/repositories/userRepository";
-import { IEncryptService } from "../../domain/services/encryptService";
-import { UserInput } from "../../domain/types/user/userModel";
+import { CreateUser } from "../../../application/use-cases/user/createUser";
+import { UserRepository } from "../../../domain/repositories/userRepository";
+import { IEncryptService } from "../../../domain/services/encryptService";
+import { UserInput } from "../../../domain/types/user/userModel";
 
 describe('CreateUser', () => {
     it('should create a user', async () => {
@@ -25,7 +25,8 @@ describe('CreateUser', () => {
                 id: 1,
                 createdAt: new Date(),
                 updatedAt: new Date()
-            })
+            }),
+            findAll: jest.fn()
         } as UserRepository;
 
         const useCase = new CreateUser(mockRepository, mockEncryptService);
@@ -61,7 +62,8 @@ describe('CreateUser', () => {
         };
 
         const mockRepository = {
-            save: jest.fn()
+            save: jest.fn(),
+            findAll: jest.fn()
         } as UserRepository;
 
         const useCase = new CreateUser(mockRepository, mockEncryptService);

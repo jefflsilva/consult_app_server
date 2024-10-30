@@ -20,7 +20,7 @@ export type User = {
     createdAt?: Date;
     updatedAt?: Date;
     profileId?: (number | null);
-    profile?: (Profile);
+    profile?: Profile;
 }
 
 export type Profile = {
