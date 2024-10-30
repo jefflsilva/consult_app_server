@@ -42,7 +42,7 @@ O projeto está hospedado e pode ser acessado através do seguinte link:
 ### Backend
 - **Node.js** com **Express**: Para criação da API RESTful e integração com banco de dados.
 - **JWT**: Autenticação segura de usuários.
-- **Banco de Dados**: MongoDB ou PostgreSQL para gerenciamento de informações dos perfis, agendamentos e avaliações.
+- **Banco de Dados**: PostgreSQL para gerenciamento de informações dos perfis, agendamentos e avaliações.
 - **WebSocket**: Para atualizações em tempo real na agenda.
 
 ### Outros Serviços
