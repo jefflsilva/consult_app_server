@@ -5,46 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8316ace-cb2a-443f-8a11-c5e40c715224" name="Changes" comment="refactor: change entities, dto, useCases">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/my-app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/services/userService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/use-cases/createUser.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domain/entities/User.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/database/prismaClient.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/infrastructure/repositories/PrismaUserRepository.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interfaces/middlewares/errorHandler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/integration/userIntegration.test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/unit/services/userService.test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/unit/use-cases/createUser.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/dtos/user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/dtos/user.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/use-cases/createPatient.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/use-cases/createProfessional.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/use-cases/user/createUser.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/use-cases/user/listUsers.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/entities/patient.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/entities/professional.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/repositories/patientRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/repositories/professionalRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/repositories/userRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/repositories/userRepository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/services/encryptService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/types/user/userModel.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/memory/repositories/memoryPatientRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/prisma/repositories/prismaPatientRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/prisma/repositories/prismaProfessionalRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/prisma/repositories/prismaUserRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/controllers/patientController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/controllers/professionalController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/controllers/userController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/controllers/userController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/routes/patient.routes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/routes/user.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/routes/user.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/unit/createPatient.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/unit/createProfessional.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/unit/user/createUser.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/unit/user/listUsers.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/services/encryptService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/services/encryptService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,8 +60,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1730329556922</updated>
-      <workItem from="1730329557944" duration="3959000" />
+      <workItem from="1730329557944" duration="4358000" />
     </task>
+    <task id="LOCAL-00001" summary="refactor: change entities, dto, useCases">
+      <option name="closed" value="true" />
+      <created>1730334180857</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730334180857</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

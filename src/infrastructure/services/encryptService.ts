@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt';
-import { IEncryptService } from '../../domain/services/encryptService';
+import {IEncryptService} from "../../domain/services/IEncryptService";
 
 export class EncryptService implements IEncryptService {
     async generateHash(str: string): Promise<string> {
