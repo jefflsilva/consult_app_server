@@ -1,5 +1,6 @@
-import { User, UserInput } from "../types/user/userModel";
+import { User } from "../entities/User";
+import {UserOutput} from "../../application/dtos/user.dto";
+
 export interface UserRepository {
-    save(user: UserInput): Promise<User>
-    findAll(): Promise<Omit<User, 'password'>[]>
+    create(user: User): Promise<UserOutput>;
 }

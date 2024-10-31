@@ -1,11 +1,16 @@
-// src/application/dtos/user.dto.ts
-export interface UserDto {
-    email: string;
-    password: string;
+export interface UserInput {
     name: string;
     lastName: string;
-    role: string;
-    profileId?: number;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
 
-
+export interface UserOutput {
+    id: number;
+    name: string;
+    lastName: string;
+    email: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

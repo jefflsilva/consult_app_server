@@ -1,19 +1,13 @@
-import { Request, Response } from 'express';
-import { CreateUser } from '../../application/use-cases/user/createUser';
-import { ListUsers } from '../../application/use-cases/user/listUsers';
+import { Request, Response } from "express";
+import { UserService } from "../../application/services/userService";
 
 export class UserController {
-    constructor(
-        private createUser: CreateUser,
-        private listUsers: ListUsers
-    ) { }
+    constructor(private userService: UserService) {}
 
-    async create(req: Request, res: Response) {
-        const professional = await this.createUser.execute(req.body);
-        res.status(201).json(professional);
-    }
-    async listAll(req: Request, res: Response) {
-        const users = await this.listUsers.execute()
-        res.status(200).json(users)
+    async register(req: Request, res: Response) {
+        const userInput = req.body;
+
+        const user = await this.userService.registerUser(userInput);
+        res.status(201).json(user);
     }
 }
