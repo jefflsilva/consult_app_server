@@ -3,17 +3,23 @@ import { User } from "../../../domain/entities/User";
 import { UseInputDTO } from "../../../application/dtos/userInput.dto";
 import { UserOutputDTO } from "../../../application/dtos/userOutput";
 import { UserRepository } from "../../../domain/repositories/userRepository";
+import { emailValidatorProtocol } from "../../../domain/validators/emailValidatorProtocol";
 
 describe("CreateUser Use Case", () => {
     let createUser: CreateUser;
     let userRepositoryMock: jest.Mocked<UserRepository>;
+    let emailValidatorMock: jest.Mocked<emailValidatorProtocol>;
 
     beforeEach(() => {
         userRepositoryMock = {
             create: jest.fn(),
-        } as unknown as jest.Mocked<UserRepository>;
+        } as jest.Mocked<UserRepository>;
 
-        createUser = new CreateUser(userRepositoryMock);
+        emailValidatorMock = {
+            isValid: jest.fn(),
+        } as jest.Mocked<emailValidatorProtocol>;
+
+        createUser = new CreateUser(userRepositoryMock, emailValidatorMock);
     });
 
     it("should successfully create a user", async () => {
@@ -38,6 +44,7 @@ describe("CreateUser Use Case", () => {
             null
         );
 
+        emailValidatorMock.isValid.mockReturnValue(true);
         userRepositoryMock.create.mockResolvedValue(createdUser);
 
         const result = await createUser.execute(userInput);
@@ -60,7 +67,6 @@ describe("CreateUser Use Case", () => {
         expect(userRepositoryMock.create).toHaveBeenCalledTimes(1);
     });
 
-
     it("should throw an error when passwords do not match", async () => {
         const userInput: UseInputDTO = {
             name: "John",
@@ -82,11 +88,29 @@ describe("CreateUser Use Case", () => {
             confirmPassword: "securepassword",
         };
 
+        emailValidatorMock.isValid.mockReturnValue(true);
         userRepositoryMock.create.mockRejectedValue(new Error("User already exists"));
 
         await expect(createUser.execute(userInput)).rejects.toThrow("User already exists");
 
         expect(userRepositoryMock.create).toHaveBeenCalledWith(expect.any(User));
         expect(userRepositoryMock.create).toHaveBeenCalledTimes(1);
+    });
+
+    it("should throw an error for an invalid email format", async () => {
+        const userInput: UseInputDTO = {
+            name: "John",
+            lastName: "Doe",
+            email: "invalid-email",
+            password: "securepassword",
+            confirmPassword: "securepassword",
+        };
+
+        emailValidatorMock.isValid.mockReturnValue(false);
+
+        await expect(createUser.execute(userInput)).rejects.toThrow("Invalid email format");
+
+        expect(emailValidatorMock.isValid).toHaveBeenCalledWith("invalid-email");
+        expect(emailValidatorMock.isValid).toHaveBeenCalledTimes(1);
     });
 });

@@ -2,13 +2,20 @@ import { UseInputDTO } from "../dtos/userInput.dto";
 import { UserOutputDTO } from "../dtos/userOutput";
 import { UserRepository } from "../../domain/repositories/userRepository";
 import { User } from "../../domain/entities/User";
+import { emailValidatorProtocol } from "../../domain/validators/emailValidatorProtocol";
 
 export class CreateUser {
-    constructor(private userRepository: UserRepository) { }
+    constructor(
+        private userRepository: UserRepository,
+        private emailValidator: emailValidatorProtocol
+    ) { }
 
     async execute(dto: UseInputDTO): Promise<UserOutputDTO> {
         if (dto.password !== dto.confirmPassword) {
             throw new Error("Passwords do not match");
+        }
+        if (!this.emailValidator.isValid(dto.email)) {
+            throw new Error("Invalid email format");
         }
 
         const now = new Date();
@@ -24,7 +31,6 @@ export class CreateUser {
         );
 
         const createdUser = await this.userRepository.create(user);
-
         return new UserOutputDTO(
             createdUser.id,
             createdUser.name,
