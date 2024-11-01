@@ -1,10 +1,10 @@
 import express from "express";
 import userRoutes from "./interfaces/routes/user.routes";
 import errorHandler from "./interfaces/middlewares/errorHandler";
+import notFoundErrorHandler from './interfaces/middlewares/notFoundHandler';
 
 const app = express();
 app.use(express.json());
-app.use('/api', userRoutes);
 
 app.get('/api', (req, res) => {
     const apiInfo = {
@@ -20,6 +20,11 @@ app.get('/api', (req, res) => {
 
     res.json(apiInfo);
 });
+
+app.use('/api', userRoutes);
+
+app.use(notFoundErrorHandler);
+
 app.use(errorHandler);
 
 export default app;

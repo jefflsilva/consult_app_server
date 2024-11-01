@@ -15,4 +15,5 @@ const userController = new UserController(userService);
 
 router.post("/users", (req, res) => userController.register(req, res));
 
+
 export default router;
