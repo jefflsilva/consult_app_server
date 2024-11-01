@@ -8,7 +8,7 @@ Este é um aplicativo de agendamento de consultas online, desenvolvido para cone
 
 O projeto está hospedado e pode ser acessado através do seguinte link:
 
-[Consult App DEMO](https://consultappserver-production.up.railway.app/)
+[Consult App DEMO](https://consultappserver-production.up.railway.app/api)
 
 ## 📋 Funcionalidades
 
