@@ -1,13 +1,15 @@
 import { Router } from "express";
 import { PrismaUserRepository } from "../../infrastructure/repositories/PrismaUserRepository";
 import { CreateUser } from "../../application/use-cases/createUser";
-import {UserController} from "../controllers/userController";
-import {UserService} from "../../application/services/userService";
+import { UserController } from "../controllers/userController";
+import { UserService } from "../../application/services/userService";
+import { EmailValidator } from "../../domain/validators/emailValidator";
 
 const router = Router();
 
 const userRepository = new PrismaUserRepository();
-const createUser = new CreateUser(userRepository);
+const emailValidator = new EmailValidator()
+const createUser = new CreateUser(userRepository, emailValidator);
 const userService = new UserService(createUser);
 const userController = new UserController(userService);
 
