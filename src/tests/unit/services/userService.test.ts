@@ -1,23 +1,22 @@
 import { UserService } from "../../../application/services/userService";
-import { PrismaUserRepository } from "../../../infrastructure/repositories/PrismaUserRepository";
 import { CreateUser } from "../../../application/use-cases/createUser";
-import { UserInput, UserOutput } from "../../../application/dtos/user.dto";
+import { UseInputDTO } from "../../../application/dtos/userInput.dto";
+import { UserOutputDTO } from "../../../application/dtos/userOutput";
 
 describe("UserService", () => {
     let userService: UserService;
-    let userRepositoryMock: jest.Mocked<PrismaUserRepository>;
+    let createUserMock: jest.Mocked<CreateUser>;
 
     beforeEach(() => {
-        userRepositoryMock = {
-            create: jest.fn(),
-        } as unknown as jest.Mocked<PrismaUserRepository>;
+        createUserMock = {
+            execute: jest.fn(),
+        } as unknown as jest.Mocked<CreateUser>;
 
-        const createUserMock = new CreateUser(userRepositoryMock);
         userService = new UserService(createUserMock);
     });
 
     it("should create a user successfully", async () => {
-        const userInput: UserInput = {
+        const userInput: UseInputDTO = {
             name: "John",
             lastName: "Doe",
             email: "john@example.com",
@@ -25,35 +24,26 @@ describe("UserService", () => {
             confirmPassword: "securepassword",
         };
 
-        const now = new Date();
+        const expectedOutput = new UserOutputDTO(
+            1,
+            userInput.name,
+            userInput.lastName,
+            userInput.email,
+            new Date(),
+            new Date(),
+        );
 
-        const createdUser: UserOutput = {
-            id: 1,
-            name: userInput.name,
-            lastName: userInput.lastName,
-            email: userInput.email,
-            createdAt: now,
-            updatedAt: now,
-        };
-
-        userRepositoryMock.create.mockResolvedValue(createdUser);
+        createUserMock.execute.mockResolvedValue(expectedOutput);
 
         const result = await userService.registerUser(userInput);
 
-        expect(result).toEqual(createdUser);
-
-        expect(userRepositoryMock.create).toHaveBeenCalledWith({
-            name: userInput.name,
-            lastName: userInput.lastName,
-            email: userInput.email,
-            password: userInput.password,
-        });
-        //
-        expect(userRepositoryMock.create).toHaveBeenCalledTimes(1);
+        expect(result).toEqual(expectedOutput);
+        expect(createUserMock.execute).toHaveBeenCalledWith(userInput);
+        expect(createUserMock.execute).toHaveBeenCalledTimes(1);
     });
 
     it("should throw an error when user creation fails", async () => {
-        const userInput: UserInput = {
+        const userInput: UseInputDTO = {
             name: "John",
             lastName: "Doe",
             email: "john@example.com",
@@ -61,17 +51,11 @@ describe("UserService", () => {
             confirmPassword: "securepassword",
         };
 
-        userRepositoryMock.create.mockRejectedValue(new Error("User already exists"));
+        createUserMock.execute.mockRejectedValue(new Error("User already exists"));
 
         await expect(userService.registerUser(userInput)).rejects.toThrow("User already exists");
 
-        expect(userRepositoryMock.create).toHaveBeenCalledWith({
-            name: userInput.name,
-            lastName: userInput.lastName,
-            email: userInput.email,
-            password: userInput.password,
-        });
-        //
-        expect(userRepositoryMock.create).toHaveBeenCalledTimes(1);
+        expect(createUserMock.execute).toHaveBeenCalledWith(userInput);
+        expect(createUserMock.execute).toHaveBeenCalledTimes(1);
     });
 });

@@ -1,28 +1,37 @@
-import { UserInput, UserOutput } from "../dtos/user.dto";
+import { UseInputDTO } from "../dtos/userInput.dto";
+import { UserOutputDTO } from "../dtos/userOutput";
+import { UserRepository } from "../../domain/repositories/userRepository";
 import { User } from "../../domain/entities/User";
-import {UserRepository} from "../../domain/repositories/userRepository";
 
 export class CreateUser {
-    constructor(private userRepository: UserRepository) {}
+    constructor(private userRepository: UserRepository) { }
 
-    async execute(data: UserInput): Promise<UserOutput> {
-        const { confirmPassword, ...userData } = data; // Não precisa do confirmPassword
+    async execute(dto: UseInputDTO): Promise<UserOutputDTO> {
+        if (dto.password !== dto.confirmPassword) {
+            throw new Error("Passwords do not match");
+        }
 
+        const now = new Date();
         const user = new User(
-            userData.name,
-            userData.lastName,
-            userData.email,
-            userData.password,
+            0,
+            dto.name,
+            dto.lastName,
+            dto.email,
+            dto.password,
+            now,
+            now,
+            null
         );
 
         const createdUser = await this.userRepository.create(user);
-        return {
-            id: createdUser.id,
-            name: createdUser.name,
-            lastName: createdUser.lastName,
-            email: createdUser.email,
-            createdAt: createdUser.createdAt,
-            updatedAt: createdUser.updatedAt,
-        };
+
+        return new UserOutputDTO(
+            createdUser.id,
+            createdUser.name,
+            createdUser.lastName,
+            createdUser.email,
+            createdUser.createdAt,
+            createdUser.updatedAt,
+        );
     }
 }

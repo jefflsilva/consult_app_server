@@ -1,46 +1,92 @@
 import { CreateUser } from "../../../application/use-cases/createUser";
-import { UserInput } from "../../../application/dtos/user.dto";
-import {UserRepository} from "../../../domain/repositories/userRepository";
+import { User } from "../../../domain/entities/User";
+import { UseInputDTO } from "../../../application/dtos/userInput.dto";
+import { UserOutputDTO } from "../../../application/dtos/userOutput";
+import { UserRepository } from "../../../domain/repositories/userRepository";
 
-describe("CreateUser", () => {
+describe("CreateUser Use Case", () => {
     let createUser: CreateUser;
-    let userRepository: UserRepository;
+    let userRepositoryMock: jest.Mocked<UserRepository>;
 
     beforeEach(() => {
-        userRepository = {
+        userRepositoryMock = {
             create: jest.fn(),
-        };
-        createUser = new CreateUser(userRepository);
+        } as unknown as jest.Mocked<UserRepository>;
+
+        createUser = new CreateUser(userRepositoryMock);
     });
 
-    it("should create a user and return user output", async () => {
-        const input: UserInput = {
+    it("should successfully create a user", async () => {
+        const userInput: UseInputDTO = {
             name: "John",
             lastName: "Doe",
-            email: "john.doe@example.com",
-            password: "password",
-            confirmPassword: "password",
+            email: "john@example.com",
+            password: "securepassword",
+            confirmPassword: "securepassword",
         };
 
-        const userMock = {
-            id: 1,
-            ...input,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        };
+        const now = new Date();
 
-        userRepository.create = jest.fn().mockResolvedValue(userMock);
+        const createdUser = new User(
+            1,
+            userInput.name,
+            userInput.lastName,
+            userInput.email,
+            userInput.password,
+            now,
+            now,
+            null
+        );
 
-        const result = await createUser.execute(input);
+        userRepositoryMock.create.mockResolvedValue(createdUser);
 
-        expect(result).toEqual({
-            id: 1,
+        const result = await createUser.execute(userInput);
+
+        expect(result).toEqual(new UserOutputDTO(
+            createdUser.id,
+            createdUser.name,
+            createdUser.lastName,
+            createdUser.email,
+            createdUser.createdAt,
+            createdUser.updatedAt,
+        ));
+
+        expect(userRepositoryMock.create).toHaveBeenCalledWith(expect.objectContaining({
+            name: userInput.name,
+            lastName: userInput.lastName,
+            email: userInput.email,
+            password: userInput.password,
+        }));
+        expect(userRepositoryMock.create).toHaveBeenCalledTimes(1);
+    });
+
+
+    it("should throw an error when passwords do not match", async () => {
+        const userInput: UseInputDTO = {
             name: "John",
             lastName: "Doe",
-            email: "john.doe@example.com",
-            createdAt: expect.any(Date),
-            updatedAt: expect.any(Date),
-        });
-        expect(userRepository.create).toHaveBeenCalledWith(expect.any(Object));
+            email: "john@example.com",
+            password: "securepassword",
+            confirmPassword: "differentpassword",
+        };
+
+        await expect(createUser.execute(userInput)).rejects.toThrow("Passwords do not match");
+    });
+
+    it("should throw an error when user creation fails", async () => {
+        const userInput: UseInputDTO = {
+            name: "John",
+            lastName: "Doe",
+            email: "john@example.com",
+            password: "securepassword",
+            confirmPassword: "securepassword",
+        };
+
+        userRepositoryMock.create.mockRejectedValue(new Error("User already exists"));
+
+        await expect(createUser.execute(userInput)).rejects.toThrow("User already exists");
+
+        expect(userRepositoryMock.create).toHaveBeenCalledWith(expect.any(User));
+        expect(userRepositoryMock.create).toHaveBeenCalledTimes(1);
     });
 });
