@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { UserService } from "../../application/services/userService";
 
 export class UserController {
-    constructor(private userService: UserService) {}
+    constructor(private userService: UserService) { }
 
     async register(req: Request, res: Response) {
         const userInput = req.body;
