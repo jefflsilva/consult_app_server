@@ -1,11 +1,16 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+import { AppError } from "../erros/AppError";
 
-const errorHandler = (err: any, _: Request, res: Response) => {
-    console.error(err);
+export class ErrorHandler {
+    handle(err: any, res: Response) {
+        if (err instanceof AppError) {
+            return res.status(400).json({
+                message: err.message,
+            });
+        }
 
-    res.status(err.status || 500).json({
-        error: err.message || "Internal Server Error",
-    });
-};
-
-export default errorHandler;
+        return res.status(err.status || 500).json({
+            error: err.message || "Internal Server Error",
+        });
+    }
+}
