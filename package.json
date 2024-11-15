@@ -9,7 +9,7 @@
     "start:prod": "npm run prisma:migrate && npm start",
     "test": "jest",
     "prisma:migrate-dev": "npx prisma migrate dev --name init",
-    "prisma:migrate": "npx prisma migrate deploy --name init",
+    "prisma:migrate": "npx prisma migrate deploy",
     "prisma:generate": "npx prisma generate",
     "prisma:reset": "npx prisma migrate reset --force",
     "prisma:status": "npx prisma migrate status",
