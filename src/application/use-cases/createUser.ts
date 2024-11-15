@@ -12,38 +12,28 @@ export class CreateUser {
     constructor(
         private userRepository: UserRepository,
         private emailValidator: emailValidatorProtocol
-    ) { }
+    ) {}
 
     async execute(userInput: UseInputDTO): Promise<UserOutputDTO> {
-
-        const existingUser = await this.userRepository.findByEmail(userInput.email);
+        const existingUser = await this.userRepository.findByEmail(
+            userInput.email
+        );
+        for (const key in userInput) {
+            if (!userInput[key as keyof UseInputDTO]) {
+                throw new MissingParamError(key);
+            }
+        }
         if (existingUser) {
-            throw new AppError('User already exists');
+            throw new AppError("User already exists");
         }
 
-        if (!userInput.name) {
-            throw new MissingParamError('name');
-        }
-        if (!userInput.lastName) {
-            throw new MissingParamError('lastName');
-        }
-        if (!userInput.email) {
-            throw new MissingParamError('email');
-        }
-        if (!userInput.password) {
-            throw new MissingParamError('password');
-        }
-        if (!userInput.confirmPassword) {
-            throw new MissingParamError('confirmPassword');
-        }
         if (userInput.password !== userInput.confirmPassword) {
-            throw new AppError('Passwords do not match');
+            throw new AppError("Passwords do not match");
         }
 
         if (!this.emailValidator.isValid(userInput.email)) {
-            throw new InvalidParamError('email');
+            throw new InvalidParamError("email");
         }
-
 
         const now = new Date();
         const user = new User(
@@ -64,12 +54,10 @@ export class CreateUser {
                 createdUser.lastName,
                 createdUser.email,
                 createdUser.createdAt,
-                createdUser.updatedAt,
+                createdUser.updatedAt
             );
         } catch (error) {
-            throw new ServerError('Error creating user',);
+            throw new ServerError("Error creating user");
         }
     }
-
-
 }
