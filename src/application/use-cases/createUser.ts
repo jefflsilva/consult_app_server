@@ -5,8 +5,8 @@ import { AppError } from "../../interfaces/erros/AppError";
 import { InvalidParamError } from "../../interfaces/erros/invalid-param-error";
 import { MissingParamError } from "../../interfaces/erros/missing-param-error";
 import { ServerError } from "../../interfaces/erros/serverError";
-import { UseInputDTO } from "../dtos/userInput.dto";
-import { UserOutputDTO } from "../dtos/userOutput";
+import { UseInputDTO } from "../dtos/users/userInput.dto";
+import { UserOutputDTO } from "../dtos/users/userOutput";
 
 export class CreateUser {
     constructor(

@@ -1,12 +1,12 @@
-import { CreateUser } from "../../../application/use-cases/createUser";
-import { User } from "../../../domain/entities/User";
-import { UseInputDTO } from "../../../application/dtos/userInput.dto";
-import { UserOutputDTO } from "../../../application/dtos/userOutput";
-import { UserRepository } from "../../../domain/repositories/userRepository";
-import { emailValidatorProtocol } from "../../../domain/validators/emailValidatorProtocol";
-import { InvalidParamError } from "../../../interfaces/erros/invalid-param-error";
-import { MissingParamError } from "../../../interfaces/erros/missing-param-error";
-import { AppError } from "../../../interfaces/erros/AppError";
+import { CreateUser } from "../../../../application/use-cases/createUser";
+import { User } from "../../../../domain/entities/User";
+import { UseInputDTO } from "../../../../application/dtos/users/userInput.dto";
+import { UserOutputDTO } from "../../../../application/dtos/users/userOutput";
+import { UserRepository } from "../../../../domain/repositories/userRepository";
+import { emailValidatorProtocol } from "../../../../domain/validators/emailValidatorProtocol";
+import { InvalidParamError } from "../../../../interfaces/erros/invalid-param-error";
+import { MissingParamError } from "../../../../interfaces/erros/missing-param-error";
+import { AppError } from "../../../../interfaces/erros/AppError";
 
 describe("CreateUser Use Case", () => {
     let createUser: CreateUser;
@@ -17,6 +17,7 @@ describe("CreateUser Use Case", () => {
         userRepositoryMock = {
             create: jest.fn(),
             findByEmail: jest.fn(),
+            createProfile: jest.fn(),
         } as jest.Mocked<UserRepository>;
 
         emailValidatorMock = {
@@ -53,21 +54,25 @@ describe("CreateUser Use Case", () => {
 
         const result = await createUser.execute(userInput);
 
-        expect(result).toEqual(new UserOutputDTO(
-            createdUser.id,
-            createdUser.name,
-            createdUser.lastName,
-            createdUser.email,
-            createdUser.createdAt,
-            createdUser.updatedAt,
-        ));
+        expect(result).toEqual(
+            new UserOutputDTO(
+                createdUser.id,
+                createdUser.name,
+                createdUser.lastName,
+                createdUser.email,
+                createdUser.createdAt,
+                createdUser.updatedAt
+            )
+        );
 
-        expect(userRepositoryMock.create).toHaveBeenCalledWith(expect.objectContaining({
-            name: userInput.name,
-            lastName: userInput.lastName,
-            email: userInput.email,
-            password: userInput.password,
-        }));
+        expect(userRepositoryMock.create).toHaveBeenCalledWith(
+            expect.objectContaining({
+                name: userInput.name,
+                lastName: userInput.lastName,
+                email: userInput.email,
+                password: userInput.password,
+            })
+        );
         expect(userRepositoryMock.create).toHaveBeenCalledTimes(1);
     });
 
@@ -81,7 +86,9 @@ describe("CreateUser Use Case", () => {
         };
 
         await expect(createUser.execute(userInput)).rejects.toThrow(AppError);
-        await expect(createUser.execute(userInput)).rejects.toThrow(new AppError('Passwords do not match'));
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            new AppError("Passwords do not match")
+        );
     });
 
     it("should throw an error when user creation fails", async () => {
@@ -94,10 +101,14 @@ describe("CreateUser Use Case", () => {
         };
 
         emailValidatorMock.isValid.mockReturnValue(true);
-        userRepositoryMock.create.mockRejectedValue(new AppError("Error creating user"));
+        userRepositoryMock.create.mockRejectedValue(
+            new AppError("Error creating user")
+        );
 
         await expect(createUser.execute(userInput)).rejects.toThrow(AppError);
-        await expect(createUser.execute(userInput)).rejects.toThrow("Error creating user");
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            "Error creating user"
+        );
     });
 
     it("should throw an error for an invalid email format", async () => {
@@ -111,8 +122,12 @@ describe("CreateUser Use Case", () => {
 
         emailValidatorMock.isValid.mockReturnValue(false);
 
-        await expect(createUser.execute(userInput)).rejects.toThrow(InvalidParamError);
-        await expect(createUser.execute(userInput)).rejects.toThrow(new InvalidParamError('email'));
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            InvalidParamError
+        );
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            new InvalidParamError("email")
+        );
     });
 
     it("should throw an error when name is missing", async () => {
@@ -124,8 +139,12 @@ describe("CreateUser Use Case", () => {
             confirmPassword: "securepassword",
         };
 
-        await expect(createUser.execute(userInput)).rejects.toThrow(MissingParamError);
-        await expect(createUser.execute(userInput)).rejects.toThrow(new MissingParamError('name'));
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            MissingParamError
+        );
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            new MissingParamError("name")
+        );
     });
 
     it("should throw an error when last name is missing", async () => {
@@ -137,8 +156,12 @@ describe("CreateUser Use Case", () => {
             confirmPassword: "securepassword",
         };
 
-        await expect(createUser.execute(userInput)).rejects.toThrow(MissingParamError);
-        await expect(createUser.execute(userInput)).rejects.toThrow(new MissingParamError('lastName'));
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            MissingParamError
+        );
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            new MissingParamError("lastName")
+        );
     });
 
     it("should throw an error when email is missing", async () => {
@@ -150,8 +173,12 @@ describe("CreateUser Use Case", () => {
             confirmPassword: "securepassword",
         };
 
-        await expect(createUser.execute(userInput)).rejects.toThrow(MissingParamError);
-        await expect(createUser.execute(userInput)).rejects.toThrow(new MissingParamError('email'));
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            MissingParamError
+        );
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            new MissingParamError("email")
+        );
     });
 
     it("should throw an error when password is missing", async () => {
@@ -163,8 +190,12 @@ describe("CreateUser Use Case", () => {
             confirmPassword: "securepassword",
         };
 
-        await expect(createUser.execute(userInput)).rejects.toThrow(MissingParamError);
-        await expect(createUser.execute(userInput)).rejects.toThrow(new MissingParamError('password'));
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            MissingParamError
+        );
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            new MissingParamError("password")
+        );
     });
 
     it("should throw an error when user already exists", async () => {
@@ -186,8 +217,10 @@ describe("CreateUser Use Case", () => {
             null
         );
 
-        userRepositoryMock.findByEmail.mockResolvedValue(createdUserMock)
+        userRepositoryMock.findByEmail.mockResolvedValue(createdUserMock);
         await expect(createUser.execute(userInput)).rejects.toThrow(AppError);
-        await expect(createUser.execute(userInput)).rejects.toThrow(new AppError('User already exists'));
+        await expect(createUser.execute(userInput)).rejects.toThrow(
+            new AppError("User already exists")
+        );
     });
 });

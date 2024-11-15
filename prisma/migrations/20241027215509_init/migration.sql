@@ -22,7 +22,7 @@ CREATE TABLE "Profile" (
     "userId" INTEGER NOT NULL,
     "specialty" TEXT,
     "phoneNumber" TEXT,
-    "dateOfBirth" TIMESTAMP(3),
+    "birthDate" TIMESTAMP(3),
     "medicalHistory" TEXT,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")

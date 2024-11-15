@@ -1,7 +1,7 @@
 import { UserService } from "../../../application/services/userService";
 import { CreateUser } from "../../../application/use-cases/createUser";
-import { UseInputDTO } from "../../../application/dtos/userInput.dto";
-import { UserOutputDTO } from "../../../application/dtos/userOutput";
+import { UseInputDTO } from "../../../application/dtos/users/userInput.dto";
+import { UserOutputDTO } from "../../../application/dtos/users/userOutput";
 
 describe("UserService", () => {
     let userService: UserService;

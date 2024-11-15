@@ -1,8 +1,45 @@
+import { Profile } from "../../domain/entities/Profile";
 import { User } from "../../domain/entities/User";
+import { UserRole } from "../../domain/entities/userRole";
 import { UserRepository } from "../../domain/repositories/userRepository";
 import { prisma } from "../database/prismaClient";
 
 export class PrismaUserRepository implements UserRepository {
+    async createProfile(profile: Profile): Promise<Profile> {
+        const profileCreated = await prisma.profile.create({
+            data: {
+                userId: profile.userId,
+                role: profile.role,
+                bio: profile.bio,
+                avatarUrl: profile.avatarUrl,
+                birthDate: profile.birthDate,
+                phoneNumber: profile.phoneNumber,
+                gender: profile.gender,
+                zipCode: profile.zipCode,
+                country: profile.country,
+                state: profile.state,
+                city: profile.city,
+                createdAt: profile.createdAt,
+                updatedAt: profile.updatedAt,
+            },
+        });
+        return new Profile(
+            profileCreated.id,
+            profileCreated.userId,
+            profileCreated.role as UserRole,
+            profileCreated.bio,
+            profileCreated.avatarUrl,
+            profileCreated.birthDate,
+            profileCreated.phoneNumber,
+            profileCreated.gender,
+            profileCreated.zipCode,
+            profileCreated.country,
+            profileCreated.state,
+            profileCreated.city,
+            profileCreated.createdAt,
+            profileCreated.updatedAt
+        );
+    }
     async create(user: User): Promise<User> {
         const createdUser = await prisma.user.create({
             data: {

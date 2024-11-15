@@ -1,5 +1,5 @@
-import { UseInputDTO } from "../dtos/userInput.dto";
-import { UserOutputDTO } from "../dtos/userOutput";
+import { UseInputDTO } from "../dtos/users/userInput.dto";
+import { UserOutputDTO } from "../dtos/users/userOutput";
 import { CreateUser } from "../use-cases/createUser";
 
 export class UserService {
