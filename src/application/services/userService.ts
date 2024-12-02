@@ -9,7 +9,17 @@ export class UserService {
     async registerUser(dto: UseInputDTO): Promise<UserOutputDTO> {
         return await this.createUser.execute(dto);
     }
-    async listAll(): Promise<UserOutputDTO[]> {
-        return await this.listUsers.execute();
+    async listAll(): Promise<Omit<UserOutputDTO, "password">[]> {
+        let users = await this.listUsers.execute();
+        return users.map((user) => {
+            return {
+                id: user.id,
+                name: user.name,
+                lastName: user.lastName,
+                email: user.email,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+            };
+        });
     }
 }
