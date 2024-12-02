@@ -14,6 +14,7 @@ describe("CreateProfile Use Case", () => {
             create: jest.fn(),
             findByEmail: jest.fn(),
             createProfile: jest.fn(),
+            findAll: jest.fn(),
         } as jest.Mocked<UserRepository>;
         createProfile = new CreateProfile(userRepositoryMock);
     });
