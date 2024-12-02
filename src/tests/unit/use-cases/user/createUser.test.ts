@@ -4,9 +4,9 @@ import { UseInputDTO } from "../../../../application/dtos/users/userInput.dto";
 import { UserOutputDTO } from "../../../../application/dtos/users/userOutput";
 import { UserRepository } from "../../../../domain/repositories/userRepository";
 import { emailValidatorProtocol } from "../../../../domain/validators/emailValidatorProtocol";
-import { InvalidParamError } from "../../../../interfaces/erros/invalid-param-error";
-import { MissingParamError } from "../../../../interfaces/erros/missing-param-error";
-import { AppError } from "../../../../interfaces/erros/AppError";
+import { InvalidParamError } from "../../../../application/erros/invalid-param-error";
+import { MissingParamError } from "../../../../application/erros/missing-param-error";
+import { AppError } from "../../../../application/erros/AppError";
 
 describe("CreateUser Use Case", () => {
     let createUser: CreateUser;

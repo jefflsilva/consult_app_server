@@ -1,10 +1,10 @@
 import { User } from "../../domain/entities/User";
 import { UserRepository } from "../../domain/repositories/userRepository";
 import { emailValidatorProtocol } from "../../domain/validators/emailValidatorProtocol";
-import { AppError } from "../../interfaces/erros/AppError";
-import { InvalidParamError } from "../../interfaces/erros/invalid-param-error";
-import { MissingParamError } from "../../interfaces/erros/missing-param-error";
-import { ServerError } from "../../interfaces/erros/serverError";
+import { AppError } from "../erros/AppError";
+import { InvalidParamError } from "../erros/invalid-param-error";
+import { MissingParamError } from "../erros/missing-param-error";
+import { ServerError } from "../erros/serverError";
 import { UseInputDTO } from "../dtos/users/userInput.dto";
 import { UserOutputDTO } from "../dtos/users/userOutput";
 

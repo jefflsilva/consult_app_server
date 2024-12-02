@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { AppError } from "../erros/AppError";
+import { AppError } from "../../application/erros/AppError";
 
 export class ErrorHandler {
     handle(err: any, res: Response) {

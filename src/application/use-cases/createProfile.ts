@@ -1,7 +1,7 @@
 import { Profile } from "../../domain/entities/Profile";
 import { UserRole } from "../../domain/entities/userRole";
 import { UserRepository } from "../../domain/repositories/userRepository";
-import { AppError } from "../../interfaces/erros/AppError";
+import { AppError } from "../erros/AppError";
 import { ProfileInputDTO } from "../dtos/profile/profileInput.dto";
 import { ProfileOutputDTO } from "../dtos/profile/profileOutput.dto";
 export class CreateProfile {
